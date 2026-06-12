@@ -1,94 +1,6 @@
-// Data for packs
-const packsData = {
-    fa: [
-        {
-            id: 1,
-            name: "پک Fantasy",
-            icon: "🏰",
-            description: "تم فانتزی زیبا و جادویی",
-            price: "50,000"
-        },
-        {
-            id: 2,
-            name: "پک Neon",
-            icon: "⚡",
-            description: "رنگ‌های نئون و درخشان",
-            price: "45,000"
-        },
-        {
-            id: 3,
-            name: "پک Nature",
-            icon: "🌲",
-            description: "پک طبیعت و جنگل",
-            price: "40,000"
-        },
-        {
-            id: 4,
-            name: "پک Space",
-            icon: "🚀",
-            description: "موضوع فضایی و ستارگان",
-            price: "55,000"
-        },
-        {
-            id: 5,
-            name: "پک Dark",
-            icon: "🌑",
-            description: "تم تاریک و مرموز",
-            price: "35,000"
-        },
-        {
-            id: 6,
-            name: "پک Medieval",
-            icon: "🛡️",
-            description: "پک قرون وسطی و شاهی",
-            price: "50,000"
-        }
-    ],
-    en: [
-        {
-            id: 1,
-            name: "Fantasy Pack",
-            icon: "🏰",
-            description: "Beautiful and magical fantasy theme",
-            price: "50,000"
-        },
-        {
-            id: 2,
-            name: "Neon Pack",
-            icon: "⚡",
-            description: "Neon and glowing colors",
-            price: "45,000"
-        },
-        {
-            id: 3,
-            name: "Nature Pack",
-            icon: "🌲",
-            description: "Nature and forest pack",
-            price: "40,000"
-        },
-        {
-            id: 4,
-            name: "Space Pack",
-            icon: "🚀",
-            description: "Space and stars theme",
-            price: "55,000"
-        },
-        {
-            id: 5,
-            name: "Dark Pack",
-            icon: "🌑",
-            description: "Dark and mysterious theme",
-            price: "35,000"
-        },
-        {
-            id: 6,
-            name: "Medieval Pack",
-            icon: "🛡️",
-            description: "Medieval and royal pack",
-            price: "50,000"
-        }
-    ]
-};
+let currentLanguage = 'fa';
+let cart = [];
+let packsData = { fa: [], en: [] };
 
 // Translations
 const translations = {
@@ -128,12 +40,37 @@ const translations = {
     }
 };
 
-let currentLanguage = 'fa';
-let cart = [];
+// Load packs from JSON
+async function loadPacks() {
+    try {
+        const response = await fetch('packs.json');
+        const data = await response.json();
+        
+        packsData.fa = data.packs.map(pack => ({
+            id: pack.id,
+            name: pack.name_fa,
+            icon: pack.icon,
+            description: pack.description_fa,
+            price: pack.price
+        }));
+        
+        packsData.en = data.packs.map(pack => ({
+            id: pack.id,
+            name: pack.name_en,
+            icon: pack.icon,
+            description: pack.description_en,
+            price: pack.price
+        }));
+        
+        renderPacks();
+    } catch (error) {
+        console.error('خطا در بارگذاری پک‌ها:', error);
+    }
+}
 
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
-    renderPacks();
+    loadPacks();
     document.documentElement.dir = 'rtl';
 });
 
@@ -183,8 +120,8 @@ function renderPacks() {
             <div class="pack-icon">${pack.icon}</div>
             <h3>${pack.name}</h3>
             <p>${pack.description}</p>
-            <div class="pack-price">${pack.price} تومان</div>
-            <button class="btn-add-cart" onclick="addToCart(${pack.id}, '${pack.name}', '${pack.price}')">
+            <div class="pack-price">${pack.price.toLocaleString('fa-IR')} تومان</div>
+            <button class="btn-add-cart" onclick="addToCart(${pack.id}, '${pack.name.replace(/'/g, "\\'")}', '${pack.price}')">
                 ${currentLanguage === 'fa' ? 'افزودن به سبد' : 'Add to Cart'}
             </button>
         `;
@@ -223,7 +160,7 @@ function updateCartUI() {
             cartItem.className = 'cart-item';
             cartItem.innerHTML = `
                 <span>${item.name}</span>
-                <span>${item.price} تومان</span>
+                <span>${parseInt(item.price).toLocaleString('fa-IR')} تومان</span>
                 <button onclick="removeFromCart(${index})" style="background: #C41E3A; color: white; border: none; padding: 5px 10px; cursor: pointer; border-radius: 3px;">
                     ${currentLanguage === 'fa' ? 'حذف' : 'Remove'}
                 </button>
@@ -245,7 +182,7 @@ function removeFromCart(index) {
 function updateTotalPrice() {
     let total = 0;
     cart.forEach(item => {
-        total += parseInt(item.price.replace(/,/g, ''));
+        total += parseInt(item.price);
     });
     
     const totalPriceElement = document.getElementById('total-price');
