@@ -1,107 +1,94 @@
 <!DOCTYPE html>
 <html lang="fa">
 <head>
-  <meta charset="UTF-8">
-  <title>PackFound | Minecraft Packs</title>
-
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial;
-      background: #0d0d0d;
-      color: white;
-    }
-
-    header {
-      background: #ff2d2d;
-      padding: 20px;
-      text-align: center;
-      font-size: 28px;
-      font-weight: bold;
-      letter-spacing: 2px;
-    }
-
-    .lang {
-      text-align: center;
-      margin: 10px;
-      font-size: 14px;
-      color: #aaa;
-    }
-
-    .container {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      padding: 20px;
-      gap: 20px;
-    }
-
-    .card {
-      background: #1a1a1a;
-      border: 1px solid #ff2d2d;
-      border-radius: 10px;
-      width: 250px;
-      padding: 15px;
-      text-align: center;
-    }
-
-    .card h3 {
-      color: #ff2d2d;
-    }
-
-    .btn {
-      display: inline-block;
-      margin-top: 10px;
-      padding: 10px;
-      background: #ff2d2d;
-      color: white;
-      text-decoration: none;
-      border-radius: 5px;
-    }
-
-    .btn:hover {
-      background: darkred;
-    }
-
-    footer {
-      text-align: center;
-      padding: 15px;
-      color: #777;
-      margin-top: 30px;
-    }
-  </style>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PackFound - فروش پک ماینکرافت</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <div class="logo">
+                    <h1>PackFound</h1>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#home" onclick="scrollTo('home')">خانه</a></li>
+                    <li><a href="#packs" onclick="scrollTo('packs')">پک‌ها</a></li>
+                    <li><a href="#about" onclick="scrollTo('about')">درباره ما</a></li>
+                    <li><a href="#contact" onclick="scrollTo('contact')">تماس</a></li>
+                </ul>
+                <div class="language-switcher">
+                    <button onclick="switchLanguage('fa')" class="lang-btn active" id="fa-btn">فارسی</button>
+                    <button onclick="switchLanguage('en')" class="lang-btn" id="en-btn">English</button>
+                </div>
+                <button class="cart-btn" onclick="toggleCart()">🛒 <span id="cart-count">0</span></button>
+            </div>
+        </div>
+    </nav>
 
-<header>PACKFOUND</header>
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h2 id="hero-title">خوش‌آمدید به PackFound</h2>
+            <p id="hero-desc">بهترین پک‌های ماینکرافت را پیدا کنید</p>
+            <button class="btn-primary" onclick="scrollTo('packs')" id="hero-btn">مرور پک‌ها</button>
+        </div>
+    </section>
 
-<div class="lang">
-  فارسی 🇮🇷 | English 🇺🇸
-</div>
+    <!-- Packs Section -->
+    <section id="packs" class="packs">
+        <div class="container">
+            <h2 id="packs-title">پک‌های موجود</h2>
+            <div class="packs-grid" id="packs-grid">
+                <!-- Packs will be added here by JavaScript -->
+            </div>
+        </div>
+    </section>
 
-<div class="container">
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <h2 id="about-title">درباره ما</h2>
+            <p id="about-text">ما بهترین و معتبرترین پک‌های ماینکرافت را فراهم می‌کنیم. با ما خرید کنید و تجربه بازی بهتری داشته باشید.</p>
+        </div>
+    </section>
 
-  <div class="card">
-    <h3>Red PvP Pack</h3>
-    <p>32x FPS Boost Pack</p>
-    <p>Price: 99,000 Toman</p>
-    <a class="btn" href="#">Buy</a>
-  </div>
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 id="contact-title">تماس با ما</h2>
+            <div class="contact-info">
+                <p>📧 <span id="email-label">ایمیل:</span> support@packfound.com</p>
+                <p>📱 <span id="phone-label">تلفن:</span> +98 (123) 456-7890</p>
+                <p>💬 <span id="social-label">شبکه‌های اجتماعی:</span> @PackFound</p>
+            </div>
+        </div>
+    </section>
 
-  <div class="card">
-    <h3>Dark FPS Pack</h3>
-    <p>Clean & Smooth</p>
-    <p>Price: 79,000 Toman</p>
-    <a class="btn" href="#">Buy</a>
-  </div>
+    <!-- Footer -->
+    <footer class="footer">
+        <p id="footer-text">&copy; 2024 PackFound. تمام حقوق محفوظ است.</p>
+    </footer>
 
-</div>
+    <!-- Shopping Cart Modal -->
+    <div id="cart-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="toggleCart()">&times;</span>
+            <h2 id="cart-title">سبد خرید</h2>
+            <div id="cart-items">
+                <p id="empty-cart">سبد خرید خالی است</p>
+            </div>
+            <div class="cart-total">
+                <h3 id="total-label">جمع کل:</h3>
+                <h3 id="total-price">0 تومان</h3>
+            </div>
+            <button class="btn-primary" onclick="checkout()" id="checkout-btn">تکمیل خرید</button>
+        </div>
+    </div>
 
-<footer>
-  © 2026 PackFound
-</footer>
-
+    <script src="script.js"></script>
 </body>
 </html>
