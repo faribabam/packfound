@@ -1,0 +1,31 @@
+{
+  "packs": [
+    {
+      "id": 1,
+      "name_fa": "پک شماره ۱",
+      "name_en": "Pack 1",
+      "icon": "🎮",
+      "description_fa": "توضیح پک شماره ۱",
+      "description_en": "Description for Pack 1",
+      "price": "50000"
+    },
+    {
+      "id": 2,
+      "name_fa": "پک شماره ۲",
+      "name_en": "Pack 2",
+      "icon": "🎨",
+      "description_fa": "توضیح پک شماره ۲",
+      "description_en": "Description for Pack 2",
+      "price": "45000"
+    },
+    {
+      "id": 3,
+      "name_fa": "پک شماره ۳",
+      "name_en": "Pack 3",
+      "icon": "✨",
+      "description_fa": "توضیح پک شماره ۳",
+      "description_en": "Description for Pack 3",
+      "price": "40000"
+    }
+  ]
+}
